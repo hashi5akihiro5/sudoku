@@ -1,14 +1,16 @@
 input_grid = [
-    [0, 1, 8, 0, 0, 0, 3, 2, 0], # 1行目
-    [2, 5, 0, 0, 0, 0, 0, 4, 6], # 2行目
-    [0, 0, 4, 6, 5, 2, 1, 0, 0], # 3行目
-    [0, 0, 6, 0, 7, 0, 2, 0, 0], # 4行目
-    [0, 2, 0, 0, 4, 0, 0, 5, 0], # 5行目
-    [0, 0, 3, 1, 0, 8, 7, 0, 0], # 6行目
-    [0, 0, 2, 5, 3, 9, 4, 0, 0], # 7行目
-    [4, 9, 0, 0, 0, 0, 0, 8, 3], # 8行目
-    [0, 7, 0, 0, 0, 0, 0, 9, 0], # 9行目
+    [0, 0, 0, 0, 0, 0, 0, 3, 0], # 1行目
+    [0, 0, 0, 0, 0, 0, 0, 0, 2], # 2行目
+    [0, 0, 7, 0, 9, 8, 0, 0, 0], # 3行目
+    [0, 0, 0, 3, 5, 0, 0, 0, 6], # 4行目
+    [0, 0, 0, 0, 0, 0, 0, 0, 0], # 5行目
+    [9, 0, 8, 0, 0, 0, 4, 0, 0], # 6行目
+    [3, 6, 0, 0, 1, 0, 0, 0, 0], # 7行目
+    [2, 0, 0, 0, 0, 0, 0, 0, 0], # 8行目
+    [0, 0, 0, 0, 0, 9, 8, 0, 0], # 9行目
 ]
+
+backtracks = 0
 
 
 # 数字を入れるマスを取得
@@ -36,6 +38,7 @@ def is_valid(grid, row, col, value):
 
 # 問題解決の関数
 def solve_sudoku(grid, row=0, col=0):
+    global backtracks
     # 空白のセルを探す
     row, col = find_next_cell(input_grid)
     # 終了判定
@@ -49,11 +52,12 @@ def solve_sudoku(grid, row=0, col=0):
             # 次へ
             if solve_sudoku(grid, row, col):
                 return True
+            backtracks += 1
             grid[row][col] = 0
     return False
 
 
 if __name__ == "__main__":
     print(solve_sudoku(input_grid))
-    for i in input_grid:
-        print(i)
+    print("試行回数：", backtracks)
+    [print(i) for i in input_grid]
